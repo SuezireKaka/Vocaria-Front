@@ -1,0 +1,15 @@
+#npm 설치 모듈 정리
+
+# 라우터
+npm i react-router-dom
+npm i react-router
+
+# 백엔드에서 받기
+npm i axios
+
+# 아이콘
+npm i react-icons
+
+# 부트스트랩
+npm install bootstrap@5.3.1
+npm install react-bootstrap bootstrap
