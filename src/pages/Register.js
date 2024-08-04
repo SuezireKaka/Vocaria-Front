@@ -6,15 +6,23 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { Button } from 'react-bootstrap';
 import InputLine from "../widgets/form/InputLine";
 
+export const REGISTER_TAG = "status";
+
 export default function Register() {
     const { registerForm } = useContext(AppContext);
 
     const [regiStatus, setRegiStatus] = useState({});
+    const [isValid, setValid] = useState({});
 
-    const changeProp = (model, propName, propVal) => {
+    const changeProp = (model, propName, propVal, type) => {
         let copy = {...model};
         copy[propName] = propVal;
-        setRegiStatus(copy);
+        if (type === REGISTER_TAG) {
+            setRegiStatus(copy);
+        }
+        else {
+            setValid(copy);
+        }
     }
 
     return (
@@ -25,16 +33,20 @@ export default function Register() {
                     if (! regiStatus[piece.title]) {
                         regiStatus[piece.title] = "";
                     }
+                    if (isValid[piece.title] === undefined) {
+                        isValid[piece.title] = false;
+                    }
 
                     return <InputLine
-                        key = {idx} piece = {piece}
+                        key={idx} piece={piece}
                         model={regiStatus}
+                        check={isValid}
                         callback={changeProp}
                     />;
                 })}
             </Form>
 
-            {console.log("회원가입 상태 좀 볼까", regiStatus)}
+            {console.log("회원가입 상태 좀 볼까", regiStatus, isValid)}
     
             <br/>
             <Button
