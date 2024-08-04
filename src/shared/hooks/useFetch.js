@@ -67,4 +67,4 @@ function useAuth(uri, auth) {
     return { loading, data, error };
 }
 
-export { useFetch as useFatch, usePost, useAuth };
+export { useFetch, usePost, useAuth };
