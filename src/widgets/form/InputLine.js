@@ -1,45 +1,59 @@
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
-import { REGISTER_TAG, CHECK_SUFFIX, PASSWORD_TYPE_NAME, CHECK_HOLDER } from "../../pages/Register";
+import { CHECK_HOLDER } from "../../pages/Register";
 import propChange from "../../shared/util/propChange";
+import calcColorWithValidaty from "../../shared/util/calcColorWithValidaty";
 
-export default function InputLine({piece,
-    model, check,
-    setRegiStatus = f => f,
+export const CHECK_SUFFIX = "Check";
+
+export default function InputLine({propName, title,
+    type, holder,
+    validRegex,
+    repeatCondition,
+    model, valid,
+    setStatus = f => f,
     setValid = f => f,
     onBlur = f => f
 }) {
     return <>
         <InputGroup className="mb-3" style={{
             display: "inline-block",
-            align: "center", width: "60%", backgroundColor: ""
+            align: "center", width: "60%",
         }}/>
-        <InputGroup.Text id="basic-addon2">{piece.title}</InputGroup.Text>
+        <InputGroup.Text id="basic-addon2" style={{
+            backgroundColor: calcColorWithValidaty(
+                valid[propName] && (
+                    !repeatCondition || (
+                    repeatCondition
+                        && valid[propName + CHECK_SUFFIX])))
+        }}>
+            {title}
+        </InputGroup.Text>
         <Form.Control
-            type={piece.type}
-            placeholder={piece.holder}
+            type={type}
+            placeholder={holder}
             onChange={(e) => {
-                propChange(model, piece.propName, e.target.value, setRegiStatus);
+                propChange(model, propName, e.target.value, setStatus);
                 
-                propChange(check, piece.propName,
-                    new RegExp(piece.validRegex).test(e.target.value),
+                propChange(valid, propName,
+                    new RegExp(validRegex).test(e.target.value),
                     setValid);
             }}
-            value={model[piece.propName]}
+            value={model[propName]}
             required
         />
-        {piece.type === PASSWORD_TYPE_NAME
+        {repeatCondition
             ? <Form.Control
-                type={piece.type}
+                type={type}
                 placeholder={CHECK_HOLDER}
                 onChange={(e) => {
-                    propChange(model, piece.propName + CHECK_SUFFIX, e.target.value, setRegiStatus);
+                    propChange(model, propName + CHECK_SUFFIX, e.target.value, setStatus);
                     
-                    propChange(check, piece.propName + CHECK_SUFFIX,
-                        e.target.value === model[piece.propName],
+                    propChange(valid, propName + CHECK_SUFFIX,
+                        e.target.value === model[propName],
                         setValid);
                 }}
-                value={model[piece.propName + CHECK_SUFFIX]}
+                value={model[propName + CHECK_SUFFIX]}
                 required
             />
             : ""}
