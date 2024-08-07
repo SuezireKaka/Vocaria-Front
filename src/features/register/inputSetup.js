@@ -1,6 +1,7 @@
 import { CHECK_SUFFIX } from "../../widgets/form/InputLine";
 import InputLine from "../../widgets/form/InputLine";
 import { PASSWORD_TYPE_NAME } from "../../pages/Register";
+import checkUniqueValue from "./checkUniqueValue";
 
 export default function inputSetup(piece, idx, regiStatus, validaty,
         setRegiStatus = f => f, setValid = f => f)
@@ -23,6 +24,7 @@ export default function inputSetup(piece, idx, regiStatus, validaty,
         holder={piece.holder}
         validRegex={piece.validRegex}
         repeatCondition={piece.type === PASSWORD_TYPE_NAME}
+        isUnique={piece.unique}
         model={regiStatus}
         valid={validaty}
         setStatus={setRegiStatus}

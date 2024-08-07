@@ -3,6 +3,7 @@ import AppContext from "../contexts/AppContextProvider";
 import Form from "react-bootstrap/Form";
 import { Button } from 'react-bootstrap';
 import inputSetup from "../features/register/inputSetup";
+import { useNavigate } from "react-router";
 
 export const PASSWORD_TYPE_NAME = "password";
 
@@ -15,6 +16,8 @@ export default function Register() {
 
     const [regiStatus, setRegiStatus] = useState({});
     const [validaty, setValidaty] = useState({});
+
+    const navigate = useNavigate();
 
     return (
         <fieldset>
@@ -30,7 +33,7 @@ export default function Register() {
             <br/>
             <Button
                 variant="outline-primary"
-                //onClick={handleSubmit}
+                //onClick={(e) => handleSubmit({...regiStatus}, navigate)}
                 disabled={! Object.values(validaty).reduce((f, s) => f && s, true)}
             >
                 Sign Up
