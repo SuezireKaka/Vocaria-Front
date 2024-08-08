@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import { Button } from 'react-bootstrap';
 import inputSetup from "../features/register/inputSetup";
 import { useNavigate } from "react-router";
+import registerRequest from "../features/register/registerRequest";
 
 export const PASSWORD_TYPE_NAME = "password";
 
@@ -33,7 +34,7 @@ export default function Register() {
             <br/>
             <Button
                 variant="outline-primary"
-                //onClick={(e) => handleSubmit({...regiStatus}, navigate)}
+                onClick={(e) => registerRequest(e, {...regiStatus}, navigate)}
                 disabled={! Object.values(validaty).reduce((f, s) => f && s, true)}
             >
                 Sign Up
