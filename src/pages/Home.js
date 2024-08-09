@@ -1,3 +1,10 @@
+import { useContext } from "react";
+import AppContext from "../contexts/AppContextProvider";
+
 export default function Home() {
-    return <h1>Hello, world!</h1>
+    const {auth} = useContext(AppContext);
+
+    return <>
+        <h1>Hello, {auth.nick ? auth.nick : "world"}!</h1>
+    </>
 }
