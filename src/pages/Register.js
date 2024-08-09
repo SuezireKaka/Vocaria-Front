@@ -1,10 +1,10 @@
 import { useState, useContext } from "react";
 import AppContext from "../contexts/AppContextProvider";
 import Form from "react-bootstrap/Form";
-import { Button } from 'react-bootstrap';
-import inputSetup from "../features/register/inputSetup";
 import { useNavigate } from "react-router";
 import registerRequest from "../features/register/registerRequest";
+import inputSetup from "../features/register/inputSetup";
+import FormButton from "../widgets/form/FormButton"
 
 export const PASSWORD_TYPE_NAME = "password";
 
@@ -32,13 +32,13 @@ export default function Register() {
             {console.log("회원가입 상태 좀 볼까", regiStatus, validaty)}
     
             <br/>
-            <Button
-                variant="outline-primary"
-                onClick={(e) => registerRequest(e, {...regiStatus}, navigate)}
-                disabled={! Object.values(validaty).reduce((f, s) => f && s, true)}
-            >
-                Sign Up
-            </Button>
-            </fieldset>
-      );
+            <FormButton
+                message="Sign Up"
+                status={{...regiStatus}}
+                validaty={{...validaty}}
+                request={registerRequest}
+                navigate={navigate}
+            />
+        </fieldset>
+    );
 };

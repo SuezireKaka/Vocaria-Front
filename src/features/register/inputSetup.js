@@ -1,7 +1,6 @@
 import { CHECK_SUFFIX } from "../../widgets/form/InputLine";
 import InputLine from "../../widgets/form/InputLine";
 import { PASSWORD_TYPE_NAME } from "../../pages/Register";
-import checkUniqueValue from "./checkUniqueValue";
 
 export default function inputSetup(piece, idx, regiStatus, validaty,
         setRegiStatus = f => f, setValid = f => f)
