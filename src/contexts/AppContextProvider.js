@@ -8,6 +8,7 @@ export const AppContextProvider = ({ children }) => {
     const [registerForm, setRegisterForm] = useState();
 
     console.log("여기는 언제 들어와?", registerForm);
+    console.log("유저 확인좀 하자", auth)
     
     return (
         <AppContext.Provider value={{
