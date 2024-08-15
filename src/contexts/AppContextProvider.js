@@ -4,7 +4,7 @@ const AppContext = createContext({});
 
 export const AppContextProvider = ({ children }) => {
     let user = window.sessionStorage.getItem("nowUser");
-    const [auth, setAuth] = useState(user ? JSON.parse(user) : {nick : "", roles : []});
+    const [auth, setAuth] = useState(user ? JSON.parse(user) : {id : "", nick : "", roles : []});
     const [registerForm, setRegisterForm] = useState();
 
     console.log("여기는 언제 들어와?", registerForm);

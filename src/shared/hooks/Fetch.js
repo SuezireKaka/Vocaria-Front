@@ -1,4 +1,4 @@
-import AppContext from "../context/AppContextProvider";
+import AppContext from "../../contexts/AppContextProvider";
 import {useFetch, usePost, useAuth} from "./useFetch"
 import { useContext } from "react";
 import Loading from '../layout/Loading';

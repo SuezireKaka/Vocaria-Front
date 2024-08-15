@@ -27,7 +27,7 @@ export default async function loginRequest(e, loginStatus, navigate = f => f, se
             const loginCode = data?.loginResultCode;
             setter({ roles, nick, accessToken, loginId, userId, accountType, loginCode });
             window.sessionStorage.setItem("nowUser", JSON.stringify({ nick, roles, accessToken, loginId, userId, accountType, loginCode }));
-            navigate("/")
+            navigate("/");
         }
         else {
             alert("아이디 또는 패스워드가 바르지 않습니다!");
