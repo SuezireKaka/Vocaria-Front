@@ -3,7 +3,7 @@ import axios from '../../app/axios/axios';
 
 //Hook 사용은 함수 처리 안에서는 사용 불가능 하군요.
 function useFetch(uri) {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState();
     const [error, setError] = useState();
     const [loading, setLoading] = useState(true);
     //console.log(uri)
@@ -11,12 +11,10 @@ function useFetch(uri) {
         if (!uri) {
             return;
         }
-        fetch(uri).then(response => response.json())
-            .then((resData) => {
-                setData(resData);
-            })
+        axios.get(uri)
+            .then(response => response.data)
+            .then(setData)
             .then(setLoading(false))
-            //.then(console.log("난 언제 나오지?"))
             .catch(setError);
     }, [uri]);
     return { loading, data, error };
