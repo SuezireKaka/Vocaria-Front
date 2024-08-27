@@ -17,7 +17,7 @@ export default function VocaDetails({data}) {
 
     return <Table className='react-bootstrap-table' style={{ width: "100%" }}>
         <thead>
-            <tr><th colSpan={2} style={{...TABLE_STYLE, textAlign: "center", ...TITLE_STYLE}}>{data?.name}</th></tr>
+            <tr><th colSpan={2} style={{...TABLE_STYLE, textAlign: "center", ...TITLE_STYLE}}>{data.name}</th></tr>
         </thead>
         <tbody>
             {auth.nick
@@ -27,10 +27,10 @@ export default function VocaDetails({data}) {
                 : null}
             <tr>
                 <td rowSpan={2}>이미지 가능?</td>
-                <td>{data?.maker.nick}</td>
+                <td>{data.maker.nick}</td>
             </tr>
-            <tr><td>{data?.introduce}</td></tr>
-            {data?.chapterList.map((chapter, i) => <p>{(i+1) + ": " + chapter.name}</p>)}
+            <tr><td>{data.introduce}</td></tr>
+            {data.chapterList.map((chapter, i) => <p>{(i+1) + ": " + chapter.name}</p>)}
         </tbody>
     </Table>
 }

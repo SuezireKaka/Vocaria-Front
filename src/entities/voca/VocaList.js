@@ -5,6 +5,7 @@ import { useState } from "react";
 
 export default function VocaList({
     data = {firstVal : [], secondVal : {}}, state,
+    isGeneral = true,
     setDataUri = f => f, buildUrl = f => f,
 }) {
     const navigate = useNavigate();
@@ -26,8 +27,11 @@ export default function VocaList({
 
     return <Table className='react-bootstrap-table' style={{ width: "100%" }}>
         <thead>
-            <tr><th colSpan={3} style={{ ...TABLE_STYLE, textAlign: "left", ...TITLE_STYLE }}>문제지 목록</th></tr>
-            <tr><td colSpan={3} style={{ ...TABLE_STYLE }}>
+            <tr><th colSpan={3} style={{ ...TABLE_STYLE, textAlign: "left", ...TITLE_STYLE }}>
+                {(isGeneral ? "" : "구독 중인 ") + "문제지 목록"}
+            </th></tr>
+            {page?.lastPage >= 2
+            ? <tr><td colSpan={3} style={{ ...TABLE_STYLE }}>
                 <div style={{ display: "inline-block" }}>
                     <Pagination>
                         {page?.lastPage >= 2
@@ -36,6 +40,7 @@ export default function VocaList({
                     </Pagination>
                 </div>
             </td></tr>
+            : <></>}
             <tr style={{ ...TABLE_STYLE, textAlign: "center", }}>
                 <th>이름</th>
                 <th>제작자</th>
@@ -47,14 +52,14 @@ export default function VocaList({
             ? vocaList.map((data, i) => <tr 
                 key={i}
                 style={{ ...TABLE_STYLE, textAlign: "left" }}
-                onClick={() => console.log(data)}
+                onClick={() => navigate(`/voca/${data.id}`)}
             >
                 <td>{data.name}</td>
                 <td>{data.maker.nick}</td>
                 <td>{data.uptDt}</td>
             </tr>)
             : <tr style={{ ...TABLE_STYLE, textAlign: "center" }}>
-                <td colSpan={4}>{"(이 위치에는 선택 가능한 툴이 존재하지 않습니다.)"}</td>
+                <td colSpan={4}>{"(이 위치에는 선택 가능한 문제집이 존재하지 않습니다.)"}</td>
             </tr>
             }
         </tbody>

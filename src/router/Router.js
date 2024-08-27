@@ -6,6 +6,7 @@ import Login from '../pages/Login';
 import TokenTest from '../pages/test/Test';
 import VocaListPage from '../pages/VocaListPage';
 import VocaDetailsPage from '../pages/VocaDetailsPage';
+import SubscribePage from '../pages/SubscribePage';
 
 export default function Router() {
     return <Routes> 
@@ -19,6 +20,8 @@ export default function Router() {
         
         <Route path="/voca" element={ <VocaListPage page={1}/> } />
         <Route path="/voca/:vocaId" element={ <VocaDetailsPage /> } />
+
+        <Route path="/subscribe" element={ <SubscribePage page={1}/> } />
   
         <Route path="*" element={<NotFound />}/>
     </Routes>
