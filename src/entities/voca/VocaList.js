@@ -34,9 +34,7 @@ export default function VocaList({
             ? <tr><td colSpan={3} style={{ ...TABLE_STYLE }}>
                 <div style={{ display: "inline-block" }}>
                     <Pagination>
-                        {page?.lastPage >= 2
-                            ? <>{displayPagination(page, state, setDataUri, buildUrl)}<br /></>
-                            : ""}
+                        {displayPagination(page, state, setDataUri, buildUrl)}<br />
                     </Pagination>
                 </div>
             </td></tr>
