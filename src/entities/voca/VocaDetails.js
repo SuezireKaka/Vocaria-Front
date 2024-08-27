@@ -1,6 +1,8 @@
 import { useContext } from "react";
 import { Table } from "react-bootstrap";
 import AppContext from "../../contexts/AppContextProvider";
+import SubscribeButton from "../../widgets/subscribe/SubscribeButton";
+import SubscribeManager from "../../layout/subscribe/SubscribeManager";
 
 export default function VocaDetails({data}) {
     const {auth} = useContext(AppContext);
@@ -22,7 +24,7 @@ export default function VocaDetails({data}) {
         <tbody>
             {auth.nick
                 ? <tr><td colSpan={2} style={{...TABLE_STYLE, textAlign: "center"}}>
-                    여기다가 구독 버튼 넣기
+                    <SubscribeManager vocaId={data.id}/>
                 </td></tr>
                 : null}
             <tr>
@@ -30,7 +32,9 @@ export default function VocaDetails({data}) {
                 <td>{data.maker.nick}</td>
             </tr>
             <tr><td>{data.introduce}</td></tr>
-            {data.chapterList.map((chapter, i) => <p>{(i+1) + ": " + chapter.name}</p>)}
+            {data.chapterList.map((chapter, i) => <tr key={i}><td colSpan={2}>
+                {(i+1) + ": " + chapter.name}</td>
+            </tr>)}
         </tbody>
     </Table>
 }
