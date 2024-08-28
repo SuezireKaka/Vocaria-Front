@@ -38,7 +38,10 @@ export default function GroupDetails({ groupData,
                 역할 목록
             </th></tr>
             <tr><th colSpan={3} style={{ ...TABLE_STYLE }}>
-                <RoleManager roleList={groupData?.providingRoleList}/>
+                <RoleManager roleList={groupData?.providingRoleList}
+                    onPinRole={(role) => {console.log("이걸 부여할 준비", role)}}
+                    onCancel={() => {console.log("취소")}}
+                />
             </th></tr>
             <tr><th colSpan={3} style={{ ...TABLE_STYLE, textAlign: "left", ...SUBTITLE_STYLE }}>
                 계정 목록
