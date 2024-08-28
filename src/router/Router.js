@@ -7,6 +7,7 @@ import TokenTest from '../pages/test/Test';
 import VocaListPage from '../pages/VocaListPage';
 import VocaDetailsPage from '../pages/VocaDetailsPage';
 import SubscribePage from '../pages/SubscribePage';
+import GroupPage from '../pages/GroupPage';
 
 export default function Router() {
     return <Routes> 
@@ -15,6 +16,8 @@ export default function Router() {
         {/*<Route path={"/agreement"} element={ <Agreement/> } />*/}
         <Route path="/login" element={ <Login /> } />
         <Route path="/register" element={ <Register /> } />
+
+        <Route path="/group/:groupId" element={ <GroupPage page={1} /> } />
 
         <Route path="/test/token" element={ <TokenTest /> } />
         
