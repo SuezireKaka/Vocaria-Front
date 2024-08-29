@@ -1,16 +1,22 @@
 import { Pagination, Table } from "react-bootstrap";
 import { displayPagination } from "../../shared/util/Pagination";
 import { useNavigate } from "react-router";
-import { useState } from "react";
-import RoleButton from "../../widgets/role/RoleButton";
+import { useContext, useState } from "react";
 import RoleManager from "../../layout/role/RoleManager";
 import RoleChain from "../../widgets/role/RoleChain";
+import { useAuth } from "../../shared/hooks/useFetch";
+import axios from "../../app/axios/axios";
+import AppContext from "../../contexts/AppContextProvider";
 
 export default function GroupDetails({ groupData,
     accounData = {firstVal : [], secondVal : {}}, state,
     setDataUri = f => f, buildUrl = f => f,
 }) {
+    const {auth} = useContext(AppContext);
+
     const navigate = useNavigate();
+
+    const ROLE_SYNC_URI = `/party/syncRole/${groupData.id}`;
 
     const originalList = accounData?.firstVal;
 
@@ -92,7 +98,27 @@ export default function GroupDetails({ groupData,
         return newAccountList;
     }
 
-    console.log("수정 여부 보여줘", editedList);
+    const onSubmit = () => {
+        let editedData = editedList
+            .map((part, i) => {return {...part, roleList: [...accountList[i].roleList]}})
+            .filter(part => part.isEdited)
+            .map(part => {return {accountId: part.id, roleList: part.roleList}})
+
+
+        if (editedData.length > 0) {
+            axios.post(ROLE_SYNC_URI, editedData,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "x-auth-token": `Bearer ${auth?.accessToken}`
+                    }
+                }
+            )
+            .catch((e) => console.log(e.message))
+        } 
+
+        setPinnedRole(null);
+    }
 
     return <Table className='react-bootstrap-table' style={{ width: "100%" }}>
         <thead>
@@ -105,7 +131,7 @@ export default function GroupDetails({ groupData,
             <tr><th colSpan={3} style={{ ...TABLE_STYLE }}>
                 <RoleManager roleList={groupData?.providingRoleList}
                     onPinRole={(role) => setPinnedRole(role)}
-                    onCancel={() => setPinnedRole(null)}
+                    onSubmit={() => onSubmit()}
                 />
             </th></tr>
             <tr><th colSpan={3} style={{ ...TABLE_STYLE, textAlign: "left", ...SUBTITLE_STYLE }}>

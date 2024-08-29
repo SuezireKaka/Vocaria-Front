@@ -2,7 +2,7 @@ import { useState } from "react";
 import RoleButton from "../../widgets/role/RoleButton";
 
 export default function RoleManager({roleList = [],
-    onPinRole = f => f, onCancel = f => f
+    onPinRole = f => f, onSubmit = f => f
 }) {
     const [nowRole, setNowRole] = useState(null);
     const [isPinned, setPinned] = useState(false);
@@ -19,7 +19,7 @@ export default function RoleManager({roleList = [],
         setNowRole(role);
         setPinned(pinCondition);
 
-        pinCondition ? onPinRole(role) : onCancel();
+        pinCondition ? onPinRole(role) : onSubmit();
     }
 
     return <>
