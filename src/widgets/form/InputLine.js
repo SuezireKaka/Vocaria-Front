@@ -31,7 +31,8 @@ export default function InputLine({propName, title,
             {title}
         </InputGroup.Text>
         <Form.Control
-            type={type}
+            as={type === "textarea" ? type : "input"}
+            type={type === "textarea" ? "text" : type}
             placeholder={holder}
             onChange={(e) => {
                 propChange(model, propName, e.target.value, setStatus);

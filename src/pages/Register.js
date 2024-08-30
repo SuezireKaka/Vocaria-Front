@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import registerRequest from "../features/register/registerRequest";
 import inputSetup from "../features/register/inputSetup";
 import FormButton from "../widgets/form/FormButton"
+import DEFAULT_STYLE from "../shared/design/DefaultStyle";
 
 export const PASSWORD_TYPE_NAME = "password";
 
@@ -21,9 +22,9 @@ export default function Register() {
     const navigate = useNavigate();
 
     return (
-        <fieldset>
+        <fieldset style={DEFAULT_STYLE}>
             <legend>회원 가입</legend>
-            <Form style={{width:"60%", margin:"0"}}>
+            <Form>
                 {registerForm?.inputPieceList.map((piece, idx) => {
                     return inputSetup(piece, idx, regiStatus, validaty, setRegiStatus, setValidaty)
                 })}

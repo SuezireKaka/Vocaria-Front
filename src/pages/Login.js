@@ -4,7 +4,8 @@ import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router";
 import inputSetup from '../features/login/inputSetup';
 import loginRequest from "../features/login/loginRequest";
-import FormButton from "../widgets/form/FormButton"
+import FormButton from "../widgets/form/FormButton";
+import DEFAULT_STYLE from "../shared/design/DefaultStyle";
 
 export const LOGIN_PROP_ARRAY = ["loginId", "rawPassword"]
 
@@ -17,9 +18,9 @@ export default function Login() {
     const navigate = useNavigate();
 
     return (
-        <fieldset>
+        <fieldset style={DEFAULT_STYLE}>
             <legend>로그인</legend>
-            <Form style={{width:"60%", margin:"0"}}>
+            <Form>
                 {registerForm?.inputPieceList
                     .filter(piece => LOGIN_PROP_ARRAY.includes(piece.propName))
                     .map((piece, idx) => {
