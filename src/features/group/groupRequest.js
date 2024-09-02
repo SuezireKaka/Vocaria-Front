@@ -1,14 +1,20 @@
 import axios from "../../app/axios/axios";
 
-export default async function registerRequest(e, groupStatus, navigate = f => f) {
+export default async function groupRequest(e, groupStatus, auth, navigate = f => f) {
     e.preventDefault();
 
-    console.log("보내기 전에 확인 좀 할게요", regiStatus)
+    console.log("보내기 전에 확인 좀 할게요", groupStatus)
 
     try {
         const response = await axios.post(
-            `/party/anonymous/createMember`,
-            regiStatus
+            `/party/anonymous/createGroup`,
+            groupStatus,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    "x-auth-token": `Bearer ${auth?.accessToken}`
+                }
+            }
         );
 
         console.log("성공 했니?", response);

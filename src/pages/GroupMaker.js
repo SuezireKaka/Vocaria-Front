@@ -6,13 +6,14 @@ import loginRequest from "../features/login/loginRequest";
 import FormButton from "../widgets/form/FormButton";
 import DEFAULT_STYLE from "../shared/design/DefaultStyle";
 import inputSetup from "../features/group/inputSetup";
+import groupRequest from "../features/group/groupRequest";
 
 export const LOGIN_PROP_ARRAY = ["loginId", "rawPassword"]
 
 export default function GroupMaker() {
-    const { groupForm, actList } = useContext(AppContext);
+    const { auth, groupForm, actList } = useContext(AppContext);
 
-    const [groupStatus, setGroupStatus] = useState({id: "----", name: "",
+    const [groupStatus, setGroupStatus] = useState({id: "----", name: "", groupName: "",
         providingRoleList: []
     });
     const [validaty, setValidaty] = useState({});
@@ -37,9 +38,10 @@ export default function GroupMaker() {
             <br/>
             <FormButton
                 message="Commit"
-                status={{...groupStatus}}
+                status={{...groupStatus, name: groupStatus.groupName}}
                 validaty={{...validaty}}
-                request={loginRequest}
+                isAuth={true}
+                request={groupRequest}
                 navigate={navigate}
             />
         </fieldset>

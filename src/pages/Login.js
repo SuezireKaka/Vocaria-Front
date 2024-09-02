@@ -27,8 +27,6 @@ export default function Login() {
                     return inputSetup(piece, idx, loginStatus, validaty, setLoginStatus, setValidaty)
                 })}
             </Form>
-
-            {console.log("로그인 상태 좀 볼까", loginStatus)}
     
             <br/>
             <FormButton
