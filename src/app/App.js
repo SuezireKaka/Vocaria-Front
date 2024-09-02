@@ -11,13 +11,26 @@ const getSystemUse = async (uri, setter = f => f) => {
 }
 
 function App() {
-    const {registerForm, setRegisterForm} = useContext(AppContext);
+    const {
+        registerForm, setRegisterForm,
+        groupForm, setGroupForm,
+        actList, setActList
+    } = useContext(AppContext);
 
     if (! registerForm) {
         getSystemUse("/framework/anonymous/getFormFor/register", setRegisterForm);
     }
 
-    console.log("그래서 지금 이거 갖고 있어요", registerForm);
+    if (! groupForm) {
+        getSystemUse("/framework/anonymous/getFormFor/group", setGroupForm);
+    }
+
+    if (! actList) {
+        getSystemUse("/party/anonymous/listAllAct", setActList);
+    }
+
+    console.log("그래서 지금 이거 갖고 있어요", 
+        [registerForm, groupForm, actList]);
 
     return <div className="App">
         <Router/>

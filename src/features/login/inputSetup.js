@@ -19,6 +19,7 @@ export default function inputSetup(piece, idx, loginStatus, validaty,
         isUnique={false}
         model={loginStatus}
         valid={validaty}
+        isAnonym={piece.propName !== "groupName"}
         setStatus={setLoginStatus}
         setValid={setValid}
     />;
