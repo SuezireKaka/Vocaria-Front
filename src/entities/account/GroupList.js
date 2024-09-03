@@ -1,12 +1,17 @@
 import { Button, Pagination, Table } from "react-bootstrap";
 import { displayPagination } from "../../shared/util/Pagination";
 import { useNavigate } from "react-router";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import toggleJoinRequest from "../../features/group/toggleJoinRequest";
+import AppContext from "../../contexts/AppContextProvider";
+import roleCheck from "../../shared/util/roleCheck";
 
 export default function GroupList({
     data = {firstVal : [], secondVal : {}}, state,
     setDataUri = f => f, buildUrl = f => f,
 }) {
+    const {auth} = useContext(AppContext);
+
     const navigate = useNavigate();
 
     const [groupList, setGroupList] = useState(data?.firstVal);
@@ -49,7 +54,11 @@ export default function GroupList({
             ? groupList.map((data, i) => <tr 
                 key={i}
                 style={{ ...TABLE_STYLE, textAlign: "left" }}
-                onClick={() => navigate(`/group/${data.group.id}`)}
+                onClick={() => {
+                    if (roleCheck(auth, data.group.id, "manager")) {
+                        navigate(`/group/${data.group.id}`)
+                    }
+                }}
             >
                 <td>{data.group.name}</td>
                 <td>{data.group.birthDate}</td>
@@ -57,8 +66,16 @@ export default function GroupList({
                     <Button variant={(data.joined ? "danger" : "success")}
                         onClick={(e) => {
                             e.stopPropagation();
-                            alert("테스트");
+                            if (roleCheck(auth, data.group.id, "manager")) {
+                                return;
+                            }
+                            toggleJoinRequest(e, auth,
+                                data.group.id,
+                                groupList, i,
+                                setGroupList
+                            )
                         }}
+                        disabled={roleCheck(auth, data.group.id, "manager")}
                     >
                         {(data.joined ? "탈퇴" : "가입") + "하기"}
                     </Button>
