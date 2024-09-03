@@ -24,6 +24,7 @@ export default function inputSetup(piece, idx, regiStatus, validaty,
         validRegex={piece.validRegex}
         repeatCondition={piece.type === PASSWORD_TYPE_NAME}
         isUnique={piece.unique}
+        isAnonym={true}
         model={regiStatus}
         valid={validaty}
         setStatus={setRegiStatus}

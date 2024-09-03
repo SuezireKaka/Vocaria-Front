@@ -7,7 +7,7 @@ export default async function groupRequest(e, groupStatus, auth, navigate = f =>
 
     try {
         const response = await axios.post(
-            `/party/anonymous/createGroup`,
+            `/party/createGroup`,
             groupStatus,
             {
                 headers: {

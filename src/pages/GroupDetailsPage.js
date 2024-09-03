@@ -3,7 +3,7 @@ import { AxiosAuth, Fetch } from "../shared/hooks/Fetch";
 import VocaDetails from "../entities/voca/VocaDetails";
 import GroupDetails from "../entities/account/GroupDetails";
 
-export default function GroupPage({page = 1}) {
+export default function GroupDetailsPage({page = 1}) {
     const param = useParams();
     const groupId = param.groupId;
 
