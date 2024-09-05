@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ListViewer from "../../shared/util/ListViewer";
 import Question from "../../widgets/question/Question";
+import evaluateRequest from "../../features/mission/evaluateRequest";
+import AppContext from "../../contexts/AppContextProvider";
 
 export default function QuestionManager({data = {questionList: []}}) {
+    const {auth} = useContext(AppContext);
+
     const questionSize = data.questionList.length;
 
     const [chooseList, setChooseList] = useState(data.questionList.map((_) => ""));
@@ -16,6 +20,7 @@ export default function QuestionManager({data = {questionList: []}}) {
         <ListViewer
             list = {data.questionList}
             index={questNum}
+            permitSymbol={"제출하기"}
             onSelect={(q, i) => <Question id={q.id}
                 question={q.question}
                 choiceList={q.choiceList}
@@ -35,6 +40,12 @@ export default function QuestionManager({data = {questionList: []}}) {
             onPrev={() => {setQuestNum(Math.max(0, questNum - 1))}}
             onNext={() => {setQuestNum(Math.min(questNum + 1, questionSize - 1))}}
             onLast={() => {setQuestNum(Math.min(questionSize - 1))}}
+            onPermit={(e) => {
+                evaluateRequest(e, auth,
+                    {questionIdList: data.questionList.map(q => q.id), chooseList: [...chooseList]},
+                    (count) => {alert("점수 : " + count + "/" + questionSize)}
+                )
+            }}
         />
     </>
 }
