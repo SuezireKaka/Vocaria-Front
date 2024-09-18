@@ -12,6 +12,7 @@ import GroupDetailsPage from '../pages/GroupDetailsPage';
 import GroupListPage from '../pages/GroupListPage';
 import MissionDetailsPage from '../pages/VocaMissionPage';
 import VocaMissionPage from '../pages/VocaMissionPage';
+import MissionListPage from '../pages/MissionListPage';
 
 export default function Router() {
     return <Routes> 
@@ -30,6 +31,7 @@ export default function Router() {
         <Route path="/voca" element={ <VocaListPage page={1}/> } />
         <Route path="/voca/:vocaId" element={ <VocaDetailsPage /> } />
 
+        <Route path="/mission" element={ <MissionListPage page={1}/> } />
         <Route path="/mission/:vocaId/:chapterNum" element={ <VocaMissionPage /> } />
 
         <Route path="/subscribe" element={ <SubscribePage page={1}/> } />

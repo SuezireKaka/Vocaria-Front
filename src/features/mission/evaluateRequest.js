@@ -1,7 +1,8 @@
 import axios from "../../app/axios/axios";
 
 export default async function evaluateRequest(e, auth, data = {questionIdList: [], chooseList: []},
-    setter = f => f
+    setter = f => f,
+    navigate = f => f
 ) {
     e.preventDefault();
 
@@ -22,6 +23,8 @@ export default async function evaluateRequest(e, auth, data = {questionIdList: [
         console.log(response);
 
         setter(response?.data);
+
+        navigate("/mission");
     }
     catch (err) {
         alert("요청 실패");

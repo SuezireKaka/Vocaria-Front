@@ -3,9 +3,12 @@ import ListViewer from "../../shared/util/ListViewer";
 import Question from "../../widgets/question/Question";
 import evaluateRequest from "../../features/mission/evaluateRequest";
 import AppContext from "../../contexts/AppContextProvider";
+import { useNavigate } from "react-router";
 
 export default function QuestionManager({data = {questionList: []}}) {
     const {auth} = useContext(AppContext);
+
+    const navigate = useNavigate();
 
     const questionSize = data.questionList.length;
 
@@ -43,7 +46,8 @@ export default function QuestionManager({data = {questionList: []}}) {
             onPermit={(e) => {
                 evaluateRequest(e, auth,
                     {questionIdList: data.questionList.map(q => q.id), chooseList: [...chooseList]},
-                    (count) => {alert("점수 : " + count + "/" + questionSize)}
+                    (count) => {alert("점수 : " + count + "/" + questionSize)},
+                    navigate
                 )
             }}
         />
