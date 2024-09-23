@@ -7,6 +7,7 @@ import RoleChain from "../../widgets/role/RoleChain";
 import { useAuth } from "../../shared/hooks/useFetch";
 import axios from "../../app/axios/axios";
 import AppContext from "../../contexts/AppContextProvider";
+import { dateFormat } from "../../shared/util/dateFormat";
 
 export default function GroupDetails({ groupData,
     accounData = {firstVal : [], secondVal : {}}, state,
@@ -157,6 +158,7 @@ export default function GroupDetails({ groupData,
             ? accountList.map((data, i) => <tr 
                 key={i}
                 style={{ ...TABLE_STYLE, textAlign: "left" }}
+                onClick={() => navigate(`/mission/${dateFormat(new Date())}/${data.id}`)}
             >
                 <td>{data.owner.name}</td>
                 <td>{data.nick}</td>
