@@ -3,9 +3,14 @@ import { Table } from "react-bootstrap";
 import AppContext from "../../contexts/AppContextProvider";
 import SubscribeButton from "../../widgets/subscribe/SubscribeButton";
 import SubscribeManager from "../../layout/subscribe/SubscribeManager";
+import { useNavigate } from "react-router";
 
 export default function VocaDetails({data}) {
     const {auth} = useContext(AppContext);
+
+    const navigate = useNavigate();
+
+    const buildMissionUri = (chapterNum) => `/voca/${data.id}/${chapterNum}`;
 
     const TABLE_STYLE = {
         border: "1px solid black",
@@ -32,8 +37,10 @@ export default function VocaDetails({data}) {
                 <td>{data.maker.nick}</td>
             </tr>
             <tr><td>{data.introduce}</td></tr>
-            {data.chapterList.map((chapter, i) => <tr key={i}><td colSpan={2}>
-                {(i+1) + ": " + chapter.name}</td>
+            {data.chapterList.map((chapter, i) => <tr key={i}
+                onClick={() => navigate(buildMissionUri(i+1))}
+            >
+                <td colSpan={2}>{(i+1) + ": " + chapter.name}</td>
             </tr>)}
         </tbody>
     </Table>

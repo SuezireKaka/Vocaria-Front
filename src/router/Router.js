@@ -30,9 +30,9 @@ export default function Router() {
         
         <Route path="/voca" element={ <VocaListPage page={1}/> } />
         <Route path="/voca/:vocaId" element={ <VocaDetailsPage /> } />
+        <Route path="/voca/:vocaId/:chapterNum" element={ <VocaMissionPage /> } />
 
         <Route path="/mission" element={ <MissionListPage page={1}/> } />
-        <Route path="/mission/:vocaId/:chapterNum" element={ <VocaMissionPage /> } />
 
         <Route path="/subscribe" element={ <SubscribePage page={1}/> } />
   
