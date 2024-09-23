@@ -82,7 +82,7 @@ export default function GroupList({
                 </td>
             </tr>)
             : <tr style={{ ...TABLE_STYLE, textAlign: "center" }}>
-                <td colSpan={4}>{"(이 위치에는 선택 가능한 문제집이 존재하지 않습니다.)"}</td>
+                <td colSpan={4}>{"(이 위치에는 선택 가능한 그룹이 존재하지 않습니다.)"}</td>
             </tr>
             }
         </tbody>
