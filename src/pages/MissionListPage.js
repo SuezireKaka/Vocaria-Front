@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo } from "react";
+import { useContext, useState } from "react";
 import AppContext from "../contexts/AppContextProvider";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { AxiosAuth } from "../shared/hooks/Fetch";
@@ -11,6 +11,7 @@ export default function MissionListPage({page = 1}) {
     console.log("지금 상태 보여 줘", state);
 
     const {auth} = useContext(AppContext);
+    const [data, setData] = useState({firstVal : [], secondVal : {}});
 
     const navigate = useNavigate();
 
@@ -19,11 +20,18 @@ export default function MissionListPage({page = 1}) {
     console.log("어디보자아", param);
 
     const buildMissionListUri = (param) => (page) => {
-        let accountId = param.testerId
-            ? param.testerId
-            : auth.userId
-        console.log("패러미터 까 봐", param.testerId, accountId)
-        return `/mission/getMission/${accountId}/${param.datestring}/${page}`;
+        console.log(auth.id === param.testerId);
+
+        console.log(auth.id === param.testerId
+            ? "ToMe"
+            : ("FromMe/" + param.testerId));
+
+        return `/mission/listAllMission${
+            auth.id === param.testerId
+                ? "ToMe"
+                : ("FromMe/" + param.testerId)
+        }`
+        + `/${param.datestring}/${page}`;
     }
 
     const buildOtherDateUri = (e) => {
@@ -37,19 +45,22 @@ export default function MissionListPage({page = 1}) {
 
         console.log("뭐왔니?", nowData)
 
+        setData(nowData)
+
         return <MissionList
-            data={nowData}
+            data={data}
             state={state}
             buildUrl={buildMissionListUri(param)}
         />
     }
+
+    console.log("어디다가 보내고 있어?", buildMissionListUri(param)(1))
 
     return <>
         <input type={"date"}
             value={param.datestring}
             onChange={e => {
                 navigate(buildOtherDateUri(e));
-                window.location.reload();
             }}
         />
         <AxiosAuth

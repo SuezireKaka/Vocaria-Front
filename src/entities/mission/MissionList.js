@@ -12,8 +12,9 @@ export default function MissionList({
 }) {
     const {auth} = useContext(AppContext);
 
-    const [missionList, setMissionList] = useState({...data}?.firstVal);
-    const [page, setPage] = useState({...data}?.secondVal);
+    const missionList = data.firstVal;
+
+    const page = data.secondVal;
 
     const TABLE_STYLE = {
         border: "1px solid black",
