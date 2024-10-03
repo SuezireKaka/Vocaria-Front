@@ -1,4 +1,5 @@
 import axios from "../../app/axios/axios";
+import { TODAY } from "../../shared/util/dateFormat";
 
 export default async function evaluateRequest(e, auth, data = {questionIdList: [], chooseList: []},
     setter = f => f,
@@ -24,7 +25,7 @@ export default async function evaluateRequest(e, auth, data = {questionIdList: [
 
         setter(response?.data);
 
-        navigate("/mission");
+        navigate("/mission/" + TODAY);
     }
     catch (err) {
         alert("요청 실패");

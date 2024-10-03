@@ -57,6 +57,12 @@ export default function MissionList({
         color: "#ffffcc"
     }
 
+    const DETAILS_STYLE = {
+        border: "1px solid black",
+        borderCollapse: "separate"
+    }
+
+
     const buildOtherDateUri = (e) => {
         return param.testerId
             ? `/mission/${e.target.value}/${param.testerId}`
@@ -114,7 +120,7 @@ export default function MissionList({
                         ? data.scorePieceList
                             .filter(quest => quest)
                             .map((quest, itt) => <tr key={quest.id + itt}
-                                style={{ ...TABLE_STYLE, textAlign: "center"}}
+                                style={{ ...DETAILS_STYLE, textAlign: "center"}}
                                 onClick={(e) => onView(e, data, i)}
                             >
                                 <td colSpan={2}>{quest.question.question}</td>
