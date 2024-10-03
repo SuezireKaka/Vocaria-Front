@@ -1,12 +1,10 @@
 import { useContext, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import AppContext from "../../contexts/AppContextProvider";
 import { FaCheck } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
-import { Pagination, Table } from "react-bootstrap";
+import { Button, Pagination, Table } from "react-bootstrap";
 import { displayPagination } from "../../shared/util/Pagination";
-import { useFetch } from "../../shared/hooks/useFetch";
-import axios from "../../app/axios/axios";
 import { missionDetailsRequest } from "../../features/mission/missionDetailsRequest";
 
 export default function MissionList({
@@ -32,12 +30,14 @@ export default function MissionList({
     }
 
     const onView = (e, data, idx) => {
-        if (data.hajime) {
-            missionDetailsRequest(e, data, idx, auth, patchURI, patcher);
-        }
-        else {
-            toggleOpen(data, idx);
-        }
+        if (data.isViewed) {
+            if (data.hajime) {
+                missionDetailsRequest(e, data, idx, auth, patchURI, patcher);
+            }
+            else {
+                toggleOpen(data, idx);
+            }
+        }   
     }
 
     const toggleOpen = (newData, idx) => {
@@ -58,8 +58,9 @@ export default function MissionList({
     }
 
     const DETAILS_STYLE = {
-        border: "1px solid black",
-        borderCollapse: "separate"
+        ...TABLE_STYLE,
+        textAlign: "center",
+        backgroundColor: "#aa0000 !important"
     }
 
 
@@ -117,16 +118,35 @@ export default function MissionList({
                         <td>{data.isComplete ? <FaCheck color="#33aa33"/> : <FaX color="#aa3333"/>}</td>
                     </tr>
                     {data.open
-                        ? data.scorePieceList
-                            .filter(quest => quest)
-                            .map((quest, itt) => <tr key={quest.id + itt}
-                                style={{ ...DETAILS_STYLE, textAlign: "center"}}
-                                onClick={(e) => onView(e, data, i)}
+                    ? <>
+                        {data.scorePieceList
+                        .filter(quest => quest)
+                        .map((quest, itt) => <tr key={quest.id + itt}
+                            style={DETAILS_STYLE}
+                            onClick={(e) => onView(e, data, i)}
+                        >
+                            <td colSpan={2}>{quest.question.question}</td>
+                            <td>{quest.answer ? <FaCheck color="#33aa33"/> : <FaX color="#aa3333"/>}</td>
+                        </tr>)}
+                        <tr><td colSpan={3} style={DETAILS_STYLE}>
+                            <Button variant="warning"
+                                onClick={() => navigate(data.id + "/test")}
                             >
-                                <td colSpan={2}>{quest.question.question}</td>
-                                <td>{quest.answer ? <FaCheck color="#33aa33"/> : <FaX color="#aa3333"/>}</td>
-                            </tr>)
-                        : ""
+                                재시험
+                            </Button>
+                        </td></tr>
+                    </>
+                    : ""
+                    }
+                    {! data.isViewed
+                    ? <tr><td colSpan={3} style={DETAILS_STYLE}>
+                        <Button variant="warning"
+                            onClick={() => navigate(data.id + "/test")}
+                        >
+                            시험
+                        </Button>
+                    </td></tr>
+                    : ""
                     }
                 </>)
                 : <tr style={{ ...TABLE_STYLE, textAlign: "center" }}>
