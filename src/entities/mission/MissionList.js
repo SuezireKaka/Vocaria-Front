@@ -8,45 +8,61 @@ import { displayPagination } from "../../shared/util/Pagination";
 import { missionDetailsRequest } from "../../features/mission/missionDetailsRequest";
 
 export default function MissionList({
-    initData = {firstVal : [], secondVal : {}}, state,
-    setDataUri = f => f, buildUrl = f => f,
+    totalStatus = {
+        data : {firstVal : [], secondVal : {}},
+        open : [],
+        hajime : []
+    },
+    auth, state, param,
+    setDataUri = f => f,
+    buildUrl = f => f, navigate = f => f,
+    buildOtherDateUri = f => f,
+    setNowStatus = f => f
 }) {
-    const [data, setData] = useState({...initData,
-        firstVal: initData.firstVal.map(d => {d.hajime = true; d.open = false; return d;})});
+    const [date, setDate] = useState(param.datestring);
 
-    const {auth} = useContext(AppContext);
+    const data = totalStatus.data;
+    const open = totalStatus.open;
+    const hajime = totalStatus.hajime;
 
-    const missionList = data.firstVal;
+    const patchData = (newData, newOpen, newHajime) => {
+        setNowStatus({
+            data: {...newData},
+            open: [...newOpen],
+            hajime: [...newHajime]
+        })
+    }
+    
+    const onView = (e, data, idx) => {
+        if (data.isViewed) {
+            if (hajime[idx]) {
+                console.log("처음이구나?");
+                missionDetailsRequest(e, data, idx, auth, patchURI, patcher);
+            }
+            else {
+                console.log("처음이 아니구나?");
+                toggleOpen(idx);
+            }
+        }   
+    };
 
-    const page = data.secondVal;
+    const toggleOpen = (idx) => {
+        let newOpen = open.map((o, i) => i === idx ? !o : o);
+        setNowStatus({...totalStatus, open: [...newOpen]});
+    }
 
     const patchURI = (data) => `/mission/getMissionOfStudentById/${auth?.userId}/${data.id}`;
 
     const patcher = (idx, resp) => {
-        console.log(idx, resp);
+        console.log("패치가 잘 되고 있는지", idx, resp);
         let patchedList = [...(data.firstVal)];
-        patchedList[idx] = {...(resp.data), hajime: false, open: true};
-        setData({...data, firstVal: patchedList});
-    }
+        patchedList[idx] = {...(resp.data)};
+        patchData({...data, firstVal: patchedList},
+            open.map((o, i) => i === idx ? !o : o),
+            hajime.map((h, i) => i === idx ? false : h)
+        );
+    };
 
-    const onView = (e, data, idx) => {
-        if (data.isViewed) {
-            if (data.hajime) {
-                missionDetailsRequest(e, data, idx, auth, patchURI, patcher);
-            }
-            else {
-                toggleOpen(data, idx);
-            }
-        }   
-    }
-
-    const toggleOpen = (newData, idx) => {
-        let patchedList = [...(data.firstVal)];
-        patchedList[idx] = {...newData, open: !(newData.open)};
-        setData({...data, firstVal: patchedList});
-    }
-
-    
     const TABLE_STYLE = {
         border: "1px solid black",
         borderCollapse: "collapse"
@@ -63,26 +79,23 @@ export default function MissionList({
         backgroundColor: "#aa0000 !important"
     }
 
+    const missionList = data.firstVal;
 
-    const buildOtherDateUri = (e) => {
-        return param.testerId
-            ? `/mission/${e.target.value}/${param.testerId}`
-            : `/mission/${e.target.value}`
-    }
+    const page = data.secondVal;
 
-    console.log("지금 상태 보여 줘", state);
+    console.log("지금 상태 보여 줘", totalStatus);
 
-    const navigate = useNavigate();
-
-    const param = useParams();
-
-
-    console.log("데이터 한 번 보자", data, missionList, page)
+    console.log("데이터 한 번 보자", data, missionList, page);
 
     return <>
         <input type={"date"}
-            value={param.datestring}
+            value={date}
             onChange={e => {
+                console.log("ssss", e.target.value);
+                setDate(e.target.value);
+            }}
+            onBlur={e => {
+                console.log("aaaa", e.target.value);
                 navigate(buildOtherDateUri(e));
             }}
         />
@@ -117,7 +130,7 @@ export default function MissionList({
                         <td>{data.isViewed ? <FaCheck color="#33aa33"/> : <FaX color="#aa3333"/>}</td>
                         <td>{data.isComplete ? <FaCheck color="#33aa33"/> : <FaX color="#aa3333"/>}</td>
                     </tr>
-                    {data.open
+                    {open[i]
                     ? <>
                         {data.scorePieceList
                         .filter(quest => quest)

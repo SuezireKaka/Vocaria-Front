@@ -4,12 +4,12 @@ import ListViewer from "../shared/util/ListViewer";
 import QuestionManager from "../layout/question/QuestionManager";
 
 export default function TestMissionPage() {
-    {/**const param = useParams();
+    const param = useParams();
     
     console.log("어디보자아", param)
 
     const buildGroupListUri = (param) => {
-        return `/voca/getChapter/${param.vocaId}/${Number(param.chapterNum)}`;
+        return `/mission/listAllQuestionIn/${param.missionId}`;
     }
 
     const renderSuccess = (resp) => {
@@ -24,7 +24,5 @@ export default function TestMissionPage() {
         uri={buildGroupListUri(param)}
         renderSuccess={renderSuccess}
         renderError={(e) => <p>{JSON.stringify(e)}</p>}
-    />**/}
-
-    return "야호~"
+    />
 }
