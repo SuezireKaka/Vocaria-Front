@@ -4,7 +4,7 @@ const AppContext = createContext({});
 
 export const AppContextProvider = ({ children }) => {
     let user = window.sessionStorage.getItem("nowUser");
-    const [auth, setAuth] = useState(user ? JSON.parse(user) : {id : "", nick : "", roles : []});
+    const [auth, setAuth] = useState(user ? JSON.parse(user) : {id : "", nick : "", roleList : []});
     const [registerForm, setRegisterForm] = useState();
     const [groupForm, setGroupForm] = useState();
     const [actList, setActList] = useState();

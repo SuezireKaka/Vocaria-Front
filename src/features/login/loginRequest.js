@@ -18,13 +18,13 @@ export default async function loginRequest(e, loginStatus, navigate = f => f, se
         if (data.code === 0) {
             const accessToken = data.token;
             const userId = data.userId;
-            const roles = data.roles;
+            const roleList = data.roleList;
             const nick = data.userNick;
             const loginId = data.userLoginId;
             const accountType = data.accountType;
             const loginCode = data?.loginResultCode;
-            setter({ roles, nick, accessToken, loginId, userId, accountType, loginCode });
-            window.sessionStorage.setItem("nowUser", JSON.stringify({ nick, roles, accessToken, loginId, userId, accountType, loginCode }));
+            setter({ roleList, nick, accessToken, loginId, userId, accountType, loginCode });
+            window.sessionStorage.setItem("nowUser", JSON.stringify({ nick, roleList, accessToken, loginId, userId, accountType, loginCode }));
             navigate("/");
         }
         else {
