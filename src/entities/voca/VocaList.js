@@ -1,13 +1,16 @@
 import { Pagination, Table } from "react-bootstrap";
 import { displayPagination } from "../../shared/util/Pagination";
 import { useNavigate } from "react-router";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import AppContext from "../../contexts/AppContextProvider";
 
 export default function VocaList({
     data = {firstVal : [], secondVal : {}}, state,
     isGeneral = true,
     setDataUri = f => f, buildUrl = f => f,
 }) {
+    const {auth} = useContext(AppContext);
+
     const navigate = useNavigate();
 
     const [vocaList, setVocaList] = useState(data?.firstVal);
@@ -50,7 +53,15 @@ export default function VocaList({
             ? vocaList.map((data, i) => <tr 
                 key={i}
                 style={{ ...TABLE_STYLE, textAlign: "left" }}
-                onClick={() => navigate(`/voca/${data.id}`)}
+                onClick={() => {
+                    console.log(auth.roleList);
+
+                    if (! data.isForTeacher 
+                        || auth.roleList.some(role => role.allowedActList.some(act => act.act === "TM")))
+                    {
+                        navigate(`/voca/${data.id}`)
+                    }
+                }}
             >
                 <td>{data.name}</td>
                 <td>{data.maker.nick}</td>

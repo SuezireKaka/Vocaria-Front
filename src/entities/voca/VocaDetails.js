@@ -22,6 +22,8 @@ export default function VocaDetails({data}) {
         color: "#5e225e"
     }
 
+    console.log("데이터가 뭐길래", data);
+
     return <Table className='react-bootstrap-table' style={{ width: "100%" }}>
         <thead>
             <tr><th colSpan={2} style={{...TABLE_STYLE, textAlign: "center", ...TITLE_STYLE}}>{data.name}</th></tr>
